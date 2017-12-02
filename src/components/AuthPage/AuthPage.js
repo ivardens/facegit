@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getToken, getIsAuthorized} from '../../reducers/auth';
-import {setToken, authorize, logout} from '../../actions/auth';
+import {getIsAuthorized} from '../../reducers/auth';
+import {authorize, logout} from '../../actions/auth';
 
 export class AuthPage extends Component {
   state = {
@@ -29,7 +29,7 @@ export class AuthPage extends Component {
           onChange={this.inputHandler}
           onKeyDown={this.inputHandler}
         />
-        {!!this.props.getAuthorize && (
+        {!!this.props.getIsAuthorized && (
           <button onClick={this.logoutHandler}>Logout</button>
         )}
       </div>
@@ -38,10 +38,9 @@ export class AuthPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  getToken: getToken(state),
-  getAuthorize: getIsAuthorized(state)
+  getIsAuthorized: getIsAuthorized(state)
 });
 
-const mapDispatchToProps = {setToken, authorize, logout};
+const mapDispatchToProps = {authorize, logout};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);

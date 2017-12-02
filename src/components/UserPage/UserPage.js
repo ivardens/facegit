@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './UserPage.css';
+import Followers from '../Followers/';
 
 export class UserPage extends Component {
   render() {
@@ -18,6 +19,7 @@ export class UserPage extends Component {
           <p>Followers: 22</p>
           <p>Public repos: 26</p>
         </div>
+        <Followers />
       </div>
     );
   }
