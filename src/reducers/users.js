@@ -1,15 +1,24 @@
-import {isFetched, isFetching, data, error} from '../actions/users';
+// import {isFetched, isFetching, data, error} from '../actions/users';
+import {
+  fetchUserRequest,
+  fetchUserSuccess,
+  fetchUserFailure
+} from '../actions/users';
 import {handleActions} from 'redux-actions';
 
 export default handleActions(
   {
-    [isFetched]: (state, action) => ({
+    [fetchUserRequest]: (state, action) => ({
       ...state,
+      isFetching: true
+    }),
+    [fetchUserSuccess]: (state, action) => ({
+      ...state,
+      data: action.payload,
+      isFetching: false,
       isFetched: true
     }),
-    [isFetching]: (state, action) => ({...state, isFetching: false}),
-    [data]: (state, action) => ({...state, data: action.payload}),
-    [error]: (state, action) => ({...state, error: action.payload})
+    [fetchUserFailure]: (state, action) => ({...state, error: action.payload})
   },
   {
     isFetched: false,

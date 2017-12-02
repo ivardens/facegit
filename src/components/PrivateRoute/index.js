@@ -6,16 +6,18 @@ import {getToken} from '../../reducers/auth';
 class PrivateRoute extends PureComponent {
   render() {
     const {token, component: Component, ...rest} = this.props;
-
+    console.log('token', token);
     return (
       <Route
         {...rest}
-        render={props => (token ? <Component {...props} /> : <Redirect to="/login" />)}
+        render={props =>
+          token ? <Component {...props} /> : <Redirect to="/login" />
+        }
       />
     );
   }
 }
 
 export default connect(state => ({
-  token: getToken(state),
+  token: getToken(state)
 }))(PrivateRoute);

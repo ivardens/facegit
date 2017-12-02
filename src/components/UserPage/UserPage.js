@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import './UserPage.css';
 import Followers from '../Followers/';
-
+import {connect} from 'react-redux';
+import {fetchUserRequest} from '../../actions/users';
 export class UserPage extends Component {
+  componentDidMount = () => {
+    const {params, fetchUserRequest} = this.props;
+    this.props.fetchUserRequest(params.name);
+  };
+
   render() {
+    console.log(this.props.user);
     return (
       <div className="">
         <div className="">
@@ -25,4 +32,11 @@ export class UserPage extends Component {
   }
 }
 
-export default UserPage;
+const mapStateToProps = (state, props) => ({
+  user: state.users.data
+});
+
+const mapDispatchToProps = {
+  fetchUserRequest
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
