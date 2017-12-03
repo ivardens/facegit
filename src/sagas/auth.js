@@ -1,5 +1,5 @@
 import {authorize, logout} from '../actions/auth';
-import {take, put, call, select} from 'redux-saga/effects';
+import {take, takeLatest, put, call, select} from 'redux-saga/effects';
 import {setTokenApi, clearTokenApi} from '../api';
 import {getIsAuthorized} from '../reducers/auth';
 import {
@@ -8,13 +8,13 @@ import {
   removeTokenFromLocalStorage
 } from '../localStorage';
 
-export function* authFlow() {
+export function* authFlow(action) {
   while (true) {
     const isAuthorized = yield select(getIsAuthorized);
     const localStorageToken = yield call(getTokenFromLocalStorage);
     let token;
 
-    if (!isAuthorized) {
+    if (!!!isAuthorized) {
       if (localStorageToken) {
         token = localStorageToken;
         yield put(authorize());
@@ -24,7 +24,7 @@ export function* authFlow() {
       }
     }
 
-    yield call(setTokenApi, token);
+    yield call(setTokenApi, action.payload);
     yield call(setTokenToLocalStorage, token);
     yield take(logout);
     yield call(removeTokenFromLocalStorage);
@@ -32,4 +32,8 @@ export function* authFlow() {
   }
 }
 
-export const setTokenWatch = () => null;
+// export const setTokenWatch = () => null;
+
+export function* setTokenWatch() {
+  yield takeLatest(authorize, authFlow);
+}

@@ -18,18 +18,3 @@ export function* fetchUserSaga(action) {
 export function* fetchUserWatch() {
   yield takeLatest(fetchUserRequest, fetchUserSaga);
 }
-
-// initial
-// data: null
-// error: null
-// isFetching: false
-// isFetched: false
-
-// fetchUserRequest
-// isFetching: true
-
-// fetchUserSuccess
-// data: userResult
-// error: null
-// isFetching: false
-// isFetched: true
