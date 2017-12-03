@@ -11,7 +11,7 @@ import {
   getFollowersIsFetching,
   getFollowersError
 } from '../../reducers/followers';
-import {Follower} from '../Follower/';
+import Follower from '../Follower/';
 
 export class Followers extends Component {
   componentDidMount() {

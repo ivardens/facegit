@@ -13,12 +13,12 @@ import Spinner from 'react-svg-spinner';
 export class UserPage extends Component {
   componentDidMount = () => {
     const {params, fetchUserRequest} = this.props;
-    // делает запрос на получение информации о пользователе
+    // action на получение информации о пользователе
     this.props.fetchUserRequest(params.name);
   };
 
   // componentDidMount() {
-  //   // делает запрос на получение информации о пользователе
+  //   // action на получение информации о пользователе
   //   const {match: {params: {name}}} = this.props;
   //   this.props.fetchUserRequest(name);
   // }

@@ -16,4 +16,3 @@ export default handleActions(
 
 export const getIsAuthorized = state => state.auth.token;
 export const getToken = state => state.auth.token;
-// export const getIsAuthorized = state => state.auth.authorize;

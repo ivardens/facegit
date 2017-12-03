@@ -14,7 +14,7 @@ export function* authFlow(action) {
     const localStorageToken = yield call(getTokenFromLocalStorage);
     let token;
 
-    if (!!!isAuthorized) {
+    if (!isAuthorized) {
       if (localStorageToken) {
         token = localStorageToken;
         yield put(authorize());
