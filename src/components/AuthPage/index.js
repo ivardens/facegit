@@ -1,18 +1,22 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {getToken, getIsAuthorized} from '../../reducers/auth';
-import {setToken, authorize, logout} from '../../actions/auth';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getIsAuthorized } from '../../reducers/auth';
+import { authorize, logout } from '../../actions/auth';
 
 export class AuthPage extends Component {
   state = {
     text: ''
   };
 
-  inputHandler = ev => {
-    let {keyCode, target: {value}} = ev;
-    keyCode === 13
-      ? this.props.authorize(value) && this.setState({text: ''})
-      : this.setState({text: value});
+  inputHandler = event => {
+    let { keyCode, target: { value } } = event;
+
+    this.setState({
+      text: value
+    });
+    if (keyCode === 13) {
+      this.props.authorize(value);
+    }
   };
 
   logoutHandler = () => this.props.logout();
@@ -29,7 +33,7 @@ export class AuthPage extends Component {
           onChange={this.inputHandler}
           onKeyDown={this.inputHandler}
         />
-        {!!this.props.getAuthorize && (
+        {this.props.isAuthorize && (
           <button onClick={this.logoutHandler}>Logout</button>
         )}
       </div>
@@ -38,10 +42,9 @@ export class AuthPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  getToken: getToken(state),
-  getAuthorize: getIsAuthorized(state)
+  isAuthorize: getIsAuthorized(state)
 });
 
-const mapDispatchToProps = {setToken, authorize, logout};
+const mapDispatchToProps = { authorize, logout };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);

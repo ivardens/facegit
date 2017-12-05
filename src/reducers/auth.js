@@ -1,19 +1,17 @@
-import {authorize, logout} from '../actions/auth';
-import {handleActions} from 'redux-actions';
+import { authorize, logout } from '../actions/auth';
+import { handleActions } from 'redux-actions';
+import { combineReducers } from 'redux';
 
-export default handleActions(
+const isAuthorized = handleActions(
   {
-    [authorize]: (state, action) => ({
-      ...state,
-      token: action.payload
-    }),
-    [logout]: state => ({...state, token: null})
+    [authorize]: () => true,
+    [logout]: () => false
   },
-  {
-    token: null
-  }
+  false
 );
 
-export const getIsAuthorized = state => state.auth.token;
-export const getToken = state => state.auth.token;
-// export const getIsAuthorized = state => state.auth.authorize;
+export default combineReducers({
+  isAuthorized
+});
+
+export const getIsAuthorized = state => state.auth.isAuthorized;
