@@ -1,8 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './UserPage.css';
 import Followers from '../Followers/';
+import { getUsers, getIsFetching } from '../../reducers/users';
+import { fetchUserRequest } from '../../actions/users';
 
 export class UserPage extends Component {
+  componentDidMount() {
+    const { fetchUserRequest, match } = this.props;
+    fetchUserRequest(match.params.name);
+  }
+
   render() {
     return (
       <div className="">
@@ -25,4 +33,10 @@ export class UserPage extends Component {
   }
 }
 
-export default UserPage;
+const mapStateToProps = state => ({
+  users: getUsers(state),
+  isFetching: getIsFetching(state)
+});
+
+const mapDispatchToProps = { fetchUserRequest };
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

@@ -1,35 +1,20 @@
-// import {authorize, logout} from '../actions/auth';
-// import {take, put, call, select} from 'redux-saga/effects';
-// import {setTokenApi, clearTokenApi} from '../api';
-// import {getIsAuthorized} from '../reducers/auth';
-// import {
-//   getTokenFromLocalStorage,
-//   setTokenToLocalStorage,
-//   removeTokenFromLocalStorage
-// } from '../localStorage';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import {
+  fetchUserRequest,
+  fetchUserSuccess,
+  fetchUserFailure
+} from '../actions/users';
+import { getUserInformation } from '../api';
 
-// export function* userFlow() {
-//   while (true) {
-//     const isAuthorized = yield select(getIsAuthorized);
-//     const localStorageToken = yield call(getTokenFromLocalStorage);
-//     let token;
+export function* fetchUserSaga(action) {
+  try {
+    const userResult = yield call(getUserInformation, action.payload);
+    yield put(fetchUserSuccess(userResult));
+  } catch (error) {
+    yield put(fetchUserFailure(error));
+  }
+}
 
-//     if (!isAuthorized) {
-//       if (localStorageToken) {
-//         token = localStorageToken;
-//         yield put(authorize());
-//       } else {
-//         const action = yield take(authorize);
-//         token = action.payload;
-//       }
-//     }
-
-//     yield call(setTokenApi, token);
-//     yield call(setTokenToLocalStorage, token);
-//     yield take(logout);
-//     yield call(removeTokenFromLocalStorage);
-//     yield call(clearTokenApi);
-//   }
-// }
-
-// export const setTokenWatch = () => null;
+export function* fetchUserWatch() {
+  yield takeLatest(fetchUserRequest, fetchUserSaga);
+}
