@@ -6,7 +6,6 @@ import { getIsAuthorized } from '../../reducers/auth';
 class PrivateRoute extends Component {
   render() {
     const { isAuthorized, component: Component, ...rest } = this.props;
-    console.log('render', isAuthorized);
     return (
       <Route
         {...rest}

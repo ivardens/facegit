@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getIsAuthorized } from '../../reducers/auth';
 import { authorize, logout } from '../../actions/auth';
+import { Redirect } from 'react-router-dom';
 
 export class AuthPage extends Component {
   state = {
@@ -22,6 +23,11 @@ export class AuthPage extends Component {
   logoutHandler = () => this.props.logout();
 
   render() {
+    const { isAuthorize } = this.props;
+
+    if (isAuthorize) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <h2>AuthPage</h2>
