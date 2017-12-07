@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getIsAuthorized } from '../../reducers/auth';
-import { authorize, logout } from '../../actions/auth';
-import { Redirect } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {getIsAuthorized} from '../../reducers/auth';
+import {authorize, logout} from '../../actions/auth';
+import {Redirect} from 'react-router-dom';
 
 export class AuthPage extends Component {
   state = {
@@ -10,7 +10,7 @@ export class AuthPage extends Component {
   };
 
   inputHandler = event => {
-    let { keyCode, target: { value } } = event;
+    let {keyCode, target: {value}} = event;
 
     this.setState({
       text: value
@@ -23,7 +23,8 @@ export class AuthPage extends Component {
   logoutHandler = () => this.props.logout();
 
   render() {
-    const { isAuthorize } = this.props;
+    const {isAuthorize, token} = this.props;
+    console.log('TOKEN = ', token);
 
     if (isAuthorize) {
       return <Redirect to="/" />;
@@ -39,7 +40,7 @@ export class AuthPage extends Component {
           onChange={this.inputHandler}
           onKeyDown={this.inputHandler}
         />
-        {this.props.isAuthorize && (
+        {this.props.token && (
           <button onClick={this.logoutHandler}>Logout</button>
         )}
       </div>
@@ -51,6 +52,6 @@ const mapStateToProps = state => ({
   isAuthorize: getIsAuthorized(state)
 });
 
-const mapDispatchToProps = { authorize, logout };
+const mapDispatchToProps = {authorize, logout};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);
