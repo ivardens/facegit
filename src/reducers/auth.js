@@ -21,5 +21,10 @@ export default combineReducers({
   isAuthorized
 });
 
+<<<<<<< HEAD
 // export const getToken = state => state.auth.token;
 export const getIsAuthorized = state => state.auth.isAuthorized;
+=======
+export const getIsAuthorized = state => state.auth.token;
+export const getToken = state => state.auth.token;
+>>>>>>> 4247adee3a1190cec0f7bd992c43981dd351e4de
